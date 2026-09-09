@@ -1,0 +1,243 @@
+{
+ "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0",
+ "_note": "cli-clip #01 Esc で止める（v4: 構成＝タイトル→説明スライド→デモ。エンディング・BGMなし。ナレーター＝青山龍星のみ。2026-09-09 キリ決定）。端末表示＝ scripts/cc02/capture/01-esc/transcript.md（Claude Code v2.1.207 実機・テイク2）の清書。捏造なし。",
+ "meta": {
+  "id": "op01-esc",
+  "series": "Claude Code 基本操作",
+  "no": "01",
+  "op": "Esc で止める",
+  "title": "動き出したAIを、<span class=\"g\">その場で止める</span>",
+  "win": "Escキーを一回。止めたところで、次の指示を待ってくれる",
+  "version": "Claude Code v2.1.207 で収録（2026-07-12）",
+  "capture_source": "kirin-ai-lab scripts/cc02/capture/01-esc/transcript.md（Claude Code v2.1.207 実機）",
+  "narrator": true
+ },
+ "readings": {},
+ "cuts": [
+  {
+   "id": "t0",
+   "type": "card",
+   "kind": "title",
+   "fixed_ms": 2200
+  },
+  {
+   "id": "x1",
+   "type": "demo",
+   "tbar": "Esc で止める — 説明",
+   "left_html": "<h2>Esc で止める <span style=\"color:#2E7D5B\">— 何が起きる？</span></h2><div class=\"sub\">Claude Code v2.1.207 で収録（2026-07-12）</div><div class=\"flow\" style=\"height:auto;margin-top:26px;gap:26px\"><div class=\"fbox\"><div class=\"t\">① 動き出したAIを、その場で止める</div><div class=\"b\">Escキーを一回。止めたところで、次の指示を待つ</div></div><div class=\"fbox d\"><div class=\"t\">② ファイルは変わらない</div><div class=\"b\">読み取り中に止めれば、何も書き換わっていない。読んだ内容は会話に残る</div></div><div class=\"fbox h\"><div class=\"t\">③ そのまま言い直せる</div><div class=\"b\">「やめて、こうして」と次の指示を出せばいい</div></div></div>",
+   "cap": "この操作でできること",
+   "prompt": "<span class=\"q\">▷</span> 止める ＝ Esc を一回",
+   "note": "① その場で止まる<br>② ファイルは変わらない<br>③ そのまま言い直せる",
+   "badge": "まず、Esc",
+   "text": "Escは、動き出したAIをその場で止めるキー。読み取り中に止めれば、ファイルは何も変わっていない。読んだ内容は会話に残る。そのまま、『やめて、こうして』と言い直せる。では、実際にやってみよう。",
+   "tail_ms": 600,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "d1",
+   "type": "demo",
+   "cap": "わざと、ざっくり頼む",
+   "prompt": "<span class=\"q\">▷</span> このフォルダ、いい感じに整理して",
+   "note": "依頼の直後から、確認なしで調査が進む。<br><br>読む系の操作は、そのまま進むことが多い。<br><br>練習フォルダなら、何が起きても大丈夫。",
+   "badge": "わざと試す",
+   "text": "練習フォルダで、あえてざっくり頼んでみる。『このフォルダ、いい感じに整理して』。依頼の直後から、確認なしで調査が進んでいく。読む系の操作は、そのまま進むことが多い。",
+   "tail_ms": 400,
+   "S": [
+    {
+     "t": "cmd",
+     "s": "claude"
+    },
+    {
+     "t": "sys",
+     "s": "● Claude Code — 練習フォルダ"
+    },
+    {
+     "t": "gap"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 1800
+    },
+    {
+     "t": "user",
+     "s": "> このフォルダ、いい感じに整理して"
+    },
+    {
+     "t": "out",
+     "s": "⏺ フォルダの中身を確認しますね。"
+    },
+    {
+     "t": "sys",
+     "s": "  Listed 1 directory"
+    },
+    {
+     "t": "out",
+     "s": "⏺ 中身のあるファイルを軽く確認します。"
+    },
+    {
+     "t": "sys",
+     "s": "  Read 3 files"
+    },
+    {
+     "t": "sys",
+     "s": "✻ … (20s · thinking)"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "type": "demo",
+   "cap": "Escで止める",
+   "prompt": "<span class=\"q\">▷</span> <b>Escキーを、一回</b>押すだけ",
+   "note": "その場で止まって、次の指示を待ってくれる。<br><br>実表示：<br><span style=\"font-family:Menlo;font-size:21px\">⎿ Interrupted · What should Claude do instead?</span>",
+   "badge": "まず、Esc",
+   "text": "思っていた方向と違うと感じたら、Escキーを一回。それだけで、その場で止まって、次の指示を待ってくれる。",
+   "tail_ms": 900,
+   "S": [
+    {
+     "t": "user",
+     "s": "> このフォルダ、いい感じに整理して"
+    },
+    {
+     "t": "out",
+     "s": "⏺ フォルダの中身を確認しますね。"
+    },
+    {
+     "t": "sys",
+     "s": "  Listed 1 directory"
+    },
+    {
+     "t": "out",
+     "s": "⏺ 中身のあるファイルを軽く確認します。"
+    },
+    {
+     "t": "sys",
+     "s": "  Read 3 files"
+    },
+    {
+     "t": "sys",
+     "s": "✻ … (20s · thinking)"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 2600
+    },
+    {
+     "t": "esc"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  Interrupted · What should Claude do instead?"
+    },
+    {
+     "t": "ret"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "type": "demo",
+   "cap": "止めた後、どうなる？",
+   "prompt": "<span class=\"q\">▷</span> ファイルは、変わっていない<br><span style=\"font-size:21px;color:#3B4F62\">読んだ内容は会話に残っている</span>",
+   "note": "「やめて、こうして」と言い直せばいい。<br><br>止めた分は、無駄にならない。",
+   "badge": "壊れていない",
+   "text": "止めた時点で、ファイルは何も変わっていない。途中まで読んだ内容は、会話に残っている。だから、『やめて、こうして』と言い直せばいい。",
+   "tail_ms": 500,
+   "S": [
+    {
+     "t": "user",
+     "s": "> このフォルダ、いい感じに整理して"
+    },
+    {
+     "t": "out",
+     "s": "⏺ フォルダの中身を確認しますね。"
+    },
+    {
+     "t": "sys",
+     "s": "  Listed 1 directory"
+    },
+    {
+     "t": "out",
+     "s": "⏺ 中身のあるファイルを軽く確認します。"
+    },
+    {
+     "t": "sys",
+     "s": "  Read 3 files"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  Interrupted · What should Claude do instead?"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 6200
+    },
+    {
+     "t": "user",
+     "s": "> 画像ファイルだけ、「画像」フォルダにまとめて。ほかは触らないで"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "d4",
+   "type": "demo",
+   "cap": "止める＝失敗じゃない",
+   "prompt": "<span class=\"q\">▷</span> 運転のブレーキと同じ",
+   "note": "踏めるから、安心して走れる。<br><br>練習フォルダなら、何度でも試せる。",
+   "badge": "まず、Esc",
+   "text": "止めることは、失敗ではない。運転のブレーキと同じで、踏めるから安心して走れる。練習フォルダなら、何度でも試せる。",
+   "tail_ms": 1200,
+   "S": [
+    {
+     "t": "user",
+     "s": "> このフォルダ、いい感じに整理して"
+    },
+    {
+     "t": "out",
+     "s": "⏺ フォルダの中身を確認しますね。"
+    },
+    {
+     "t": "sys",
+     "s": "  Listed 1 directory"
+    },
+    {
+     "t": "out",
+     "s": "⏺ 中身のあるファイルを軽く確認します。"
+    },
+    {
+     "t": "sys",
+     "s": "  Read 3 files"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  Interrupted · What should Claude do instead?"
+    },
+    {
+     "t": "user",
+     "s": "> 画像ファイルだけ、「画像」フォルダにまとめて。ほかは触らないで"
+    },
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  }
+ ]
+}

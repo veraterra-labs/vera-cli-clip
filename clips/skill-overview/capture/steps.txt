@@ -1,0 +1,11 @@
+# capture_session.sh スモークテスト（読む系だけ・練習フォルダ）
+trust
+snap ready
+type このフォルダにあるファイルの種類を数えて教えて
+enter
+waitfor Listed|Read|Searched|Glob|Bash|⏺ 60
+wait 1.5
+snap running
+key Escape
+wait 1.5
+snap after_esc

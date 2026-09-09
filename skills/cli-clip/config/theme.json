@@ -1,0 +1,11 @@
+{
+  "_note": "画面の意匠と運用設定。channel/series はヘッダ「<channel> ｜ <series>」に出る。review_copy_dir は完成mp4のレビュー用コピー先（空なら何もしない）。",
+  "channel": "麒麟AI研究所",
+  "series": "Claude Code 基本操作",
+  "colors": {"ink": "#16324F", "gold": "#C9A227", "primary": "#2E7D5B", "paper": "#F2F7FB", "termbg": "#0E1620"},
+  "font_sans": "\"Hiragino Kaku Gothic ProN\", \"Hiragino Sans\", \"Noto Sans CJK JP\", \"Noto Sans JP\", \"Yu Gothic\", sans-serif",
+  "font_mono": "\"SFMono-Regular\", Menlo, Consolas, \"Noto Sans Mono CJK JP\", \"DejaVu Sans Mono\", \"Hiragino Sans\", monospace",
+  "review_copy_dir": "",
+  "loudness_lufs": -10.4,
+  "max_sec_default": 130
+}

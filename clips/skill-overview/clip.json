@@ -1,0 +1,323 @@
+{
+ "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0",
+ "_note": "ccop-clip スキルの概要とデモ（v2: 構成＝タイトル→説明スライド→デモ。エンディング・BGMなし。ナレーター＝青山龍星のみ）。端末表示は capture/raw/（2026-09-08 スモークテスト実録・Claude Code v2.1.263）と op01 の実ビルドログの清書。パスは表示用に短縮（/tmp/ccop-practice/op01）している以外は原文ママ。",
+ "meta": {
+  "id": "skill-overview",
+  "series": "Claude Code 基本操作",
+  "no": "00",
+  "op": "cli-clip スキル概要",
+  "title": "1操作1本の解説クリップを、<span class=\"g\">台本から自動で</span>作る",
+  "win": "ccop-clip スキル｜概要とデモ",
+  "version": "cli-clip v0.1 ／ Claude Code v2.1.263（2026-09-08）",
+  "capture_source": "clips/skill-overview/capture/raw/（スモークテスト実録）＋ op01-esc ビルドログ",
+  "narrator": true,
+  "max_sec": 200
+ },
+ "readings": {
+  "ccop-clip": "シーシーオーピー・クリップ",
+  "clip.json": "クリップ・ジェイソン",
+  "lint": "リント",
+  "whisper": "ウィスパー",
+  "Playwright": "プレイライト",
+  "Chromium": "クロミウム",
+  "ffmpeg": "エフエフエムペグ",
+  "tmux": "ティーマックス",
+  "iCloud": "アイクラウド",
+  "VOICEVOX": "ボイスボックス",
+  "JSON": "ジェイソン",
+  "A/V": "エーブイ",
+  "BGM": "ビージーエム",
+  "mp4": "エムピーフォー",
+  "cli-clip": "シーエルアイ・クリップ"
+ },
+ "cuts": [
+  {
+   "id": "t0",
+   "type": "card",
+   "kind": "title",
+   "fixed_ms": 2400
+  },
+  {
+   "id": "n1",
+   "type": "demo",
+   "tbar": "cli-clip — 全体の流れ",
+   "left_html": "<h2>cli-clip <span style=\"color:#2E7D5B\">— 何をするスキルか</span></h2><div class=\"sub\">Claude Code の基本操作を「1操作＝1本＝60〜120秒」で量産する</div><div class=\"flow\" style=\"height:auto\"><div class=\"frow\"><div class=\"fbox h\"><span class=\"who h\">人が決める</span><div class=\"t\">操作と題材</div><div class=\"b\">どの操作を、練習フォルダで<br>どう見せるか</div></div><div class=\"farrow\">→</div><div class=\"fbox\"><span class=\"who a\">スキル</span><div class=\"t\">実録</div><div class=\"b\">本物の Claude Code を tmux で<br>操作し、画面を保存</div></div><div class=\"farrow\">→</div><div class=\"fbox\"><span class=\"who a\">スキル</span><div class=\"t\">台本 JSON</div><div class=\"b\">ナレーション・画面の行・<br>パネル文言を1ファイルに</div></div></div><div class=\"frow\"><div class=\"fbox d\"><span class=\"who a\">スキル</span><div class=\"t\">音声</div><div class=\"b\">VOICEVOX（青山龍星）</div></div><div class=\"farrow\">→</div><div class=\"fbox d\"><span class=\"who a\">スキル</span><div class=\"t\">字幕</div><div class=\"b\">whisper で実発話に同期</div></div><div class=\"farrow\">→</div><div class=\"fbox d\"><span class=\"who a\">スキル</span><div class=\"t\">録画・合成</div><div class=\"b\">Playwright → ffmpeg → mp4<br>→ iCloud へコピー</div></div></div></div>",
+   "cap": "cli-clip とは",
+   "prompt": "<span class=\"q\">▷</span> 1操作＝1本＝60〜120秒",
+   "note": "人：操作と題材を決める。<br><br>スキル：実録 → 台本 → 音声 → 字幕 → 動画 → iCloud。",
+   "badge": "型で量産する",
+   "text": "Claude Codeの基本操作を、1操作につき1本、60秒から120秒の短い動画で紹介する。そのための制作スキルが、cli-clipだ。人が決めるのは、どの操作を、どんな題材で見せるか。ここだけ。実機での実行、端末画面の再現、音声、字幕、動画の書き出しまでは、スキルが自動で進める。",
+   "tail_ms": 500,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "n2",
+   "type": "demo",
+   "tbar": "制作環境",
+   "left_html": "<h2>制作環境 <span style=\"color:#2E7D5B\">— LLM 以外、すべて無料・ローカル</span></h2><div class=\"sub\">APIキー不要。Mac 1台で最初から最後まで回る</div><table class=\"tbl\"><tr><td>音声</td><td>VOICEVOX ENGINE<span class=\"free\">無料・ローカル</span></td></tr><tr><td>字幕の同期</td><td>whisper.cpp<span class=\"free\">無料・ローカル</span></td></tr><tr><td>画面の録画</td><td>Playwright ＋ Chromium<span class=\"free\">無料・ローカル</span></td></tr><tr><td>端末の再現</td><td>HTML／CSS（実録の清書）<span class=\"free\">無料</span></td></tr><tr><td>動画の合成</td><td>ffmpeg<span class=\"free\">無料・ローカル</span></td></tr><tr><td>実機の操作</td><td>tmux ＋ Claude Code<span class=\"free\" style=\"background:#FFF2CC;border-color:#C9A227;color:#8a6d00\">LLM だけ有料</span></td></tr></table>",
+   "cap": "制作環境",
+   "prompt": "<span class=\"q\">▷</span> LLM 以外、すべて無料",
+   "note": "APIキー不要。<br><br>Mac 1台で完結。",
+   "badge": "無料・ローカル",
+   "text": "使う道具は、LLM以外すべて無料で、ローカルで動く。音声はVOICEVOX、字幕の同期はwhisper、画面の録画はPlaywrightとChromium、動画の合成はffmpeg。APIキーは要らない。社内のMac一台で、最初から最後まで回る。",
+   "tail_ms": 500,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "n8",
+   "type": "demo",
+   "tbar": "Phase 4–5 レビューと公開",
+   "left_html": "<h2>レビューと公開 <span style=\"color:#2E7D5B\">— 直すのはカット単位</span></h2><div class=\"sub\">全体を作り直さない</div><div class=\"flow\" style=\"height:auto;margin-top:30px\"><div class=\"frow\"><div class=\"fbox h\"><span class=\"who h\">人</span><div class=\"t\">レビュー</div><div class=\"b\">指摘は「カット名＋内容」<br>例：d2 の字幕が早い</div></div><div class=\"farrow\">→</div><div class=\"fbox\"><span class=\"who a\">スキル</span><div class=\"t\">--only d2</div><div class=\"b\">そのカットだけ作り直し、<br>全体を再結合して md5 照合</div></div><div class=\"farrow\">→</div><div class=\"fbox d\"><span class=\"who a\">スキル</span><div class=\"t\">publish.md</div><div class=\"b\">収録バージョンと<br>VOICEVOX 話者のクレジットを概要欄へ</div></div></div></div><div class=\"tip\" style=\"margin-top:40px\">UI やキーは変わる前提<small>収録バージョンを毎回カードに明示する。挙動が変われば台本側を直す。</small></div>",
+   "cap": "Phase 4–5",
+   "prompt": "<span class=\"q\">▷</span> 直すのはカット単位",
+   "note": "全体を作り直さない。<br><br>概要欄：収録バージョン／VOICEVOX のクレジット。",
+   "badge": "カット単位",
+   "text": "できた動画のレビューは、指摘をカット名で受けて、そのカットだけ作り直す。全体は作り直さない。公開時は、収録バージョンと、VOICEVOX話者のクレジットを概要欄に載せる。ここまでが型。では、デモを見てみよう。",
+   "tail_ms": 500,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "n3",
+   "type": "demo",
+   "tbar": "ターミナル — pipeline/ccop（Phase 1 実録）",
+   "cap": "Phase 1：実録",
+   "prompt": "<span class=\"q\">▷</span> 練習フォルダ → tmux で実機操作",
+   "note": "steps.txt の手順どおりに<br>type ／ enter ／ key ／ snap。<br><br>画面はそのまま保存する。",
+   "badge": "捏造しない",
+   "text": "まず、隔離した練習フォルダを作る。実データには触れない。次に、tmuxの上で本物のClaude Codeを起動し、手順ファイルどおりに操作して、画面をそのまま保存する。これが、バックグラウンドの実録だ。",
+   "tail_ms": 600,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 2200
+    },
+    {
+     "t": "cmd",
+     "s": "./make_practice_dir.sh /tmp/ccop-practice/op01"
+    },
+    {
+     "t": "out",
+     "s": "practice dir ready: /tmp/ccop-practice/op01 (19 files)"
+    },
+    {
+     "t": "gap"
+    },
+    {
+     "t": "cmd",
+     "s": "./capture_session.sh /tmp/ccop-practice/op01 steps.txt raw"
+    },
+    {
+     "t": "sys",
+     "s": "09:27:58 start session=ccop-smoke"
+    },
+    {
+     "t": "sys",
+     "s": "09:27:59 trust: dialog -> Yes"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:39 snap -> 01_ready.txt"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:39 type: このフォルダにあるファイルの種類を数えて教えて"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:42 waitfor ok: Listed|Read|Searched|Glob|Bash|⏺"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:43 snap -> 02_running.txt"
+    },
+    {
+     "t": "gd",
+     "s": "09:28:43 key: Escape"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:45 snap -> 03_after_esc.txt"
+    },
+    {
+     "t": "sys",
+     "s": "09:28:47 end (snaps=3)"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "n4",
+   "type": "demo",
+   "tbar": "raw/03_after_esc.txt（実録）",
+   "cap": "実録の原文",
+   "prompt": "<span class=\"q\">▷</span> <span style=\"font-family:Menlo;font-size:22px\">⎿ Interrupted · What should Claude do instead?</span>",
+   "note": "この文言を、そのまま画面に載せる。<br><br>想定と違えば、直すのは台本のほう。",
+   "badge": "原文ママ",
+   "text": "保存された実録がこれだ。曖昧な依頼で動き出したClaude Codeを、Escキーで止めた瞬間。この表示を、原文のまま動画に使う。作り話は入れない。挙動が想定と違えば、直すのは台本のほうだ。",
+   "tail_ms": 600,
+   "S": [
+    {
+     "t": "sys",
+     "s": "● Claude Code v2.1.263"
+    },
+    {
+     "t": "user",
+     "s": "> このフォルダにあるファイルの種類を数えて教えて"
+    },
+    {
+     "t": "out",
+     "s": "⏺ このフォルダのファイルを拡張子ごとに集計します。"
+    },
+    {
+     "t": "out",
+     "s": "⏺ Running 1 shell command…"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 4200
+    },
+    {
+     "t": "esc"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  Interrupted · What should Claude do instead?"
+    },
+    {
+     "t": "ret"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "n5",
+   "type": "demo",
+   "tbar": "clips/op01-esc/clip.json（Phase 2 台本）",
+   "left_html": "<div class=\"codev\">{ <span class=\"k\">\"id\"</span>: <span class=\"s\">\"d2\"</span>, <span class=\"k\">\"type\"</span>: <span class=\"s\">\"demo\"</span>,\n  <span class=\"k\">\"cap\"</span>: <span class=\"s\">\"Escで止める\"</span>,\n  <span class=\"k\">\"prompt\"</span>: <span class=\"s\">\"▷ Escキーを、一回押すだけ\"</span>,\n  <span class=\"k\">\"badge\"</span>: <span class=\"s\">\"まず、Esc\"</span>,\n  <span class=\"hl\"><span class=\"k\">\"text\"</span>: <span class=\"s\">\"思っていた方向と違うと感じたら、Escキーを一回。…\"</span></span>,  <span class=\"c\">← 音声＝字幕</span>\n  <span class=\"k\">\"S\"</span>: [                                                    <span class=\"c\">← 画面の行（実録）</span>\n    {\"t\":\"user\",\"s\":\"&gt; このフォルダ、いい感じに整理して\"},\n    {\"t\":\"out\", \"s\":\"⏺ フォルダの中身を確認しますね。\"},\n    {\"t\":\"beat\",\"talk\":true,\"dur\":2600},\n    {\"t\":\"esc\"},\n    {\"t\":\"sys\", \"s\":\"  ⎿  Interrupted · What should Claude do instead?\"},\n    {\"t\":\"beat\"} ] }\n\n<span class=\"c\">$</span> python3 build_clip.py clip.json --lint\n<span class=\"s\">[lint] セリフ 320字 ≈ 音声 58s ／ 想定フル尺 ≈ 71s（目標 60〜120s）</span></div>",
+   "cap": "Phase 2：台本",
+   "prompt": "<span class=\"q\">▷</span> clip.json ＝ 1本の正本",
+   "note": "text ＝ 音声 ＝ 字幕。<br>S ＝ 画面に流す行。<br><br>--lint で二人称・断定・尺を検査。",
+   "badge": "台本＝JSON",
+   "text": "台本は、1本につき1つのJSONファイル。ナレーション、画面に流す行、右のパネルの文言を、カットごとに書く。二人称や断定を使っていないか、尺が収まるかは、lintで機械的に検査する。",
+   "tail_ms": 500,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "n6",
+   "type": "demo",
+   "tbar": "ターミナル — pipeline/ccop（Phase 3 ビルド）",
+   "cap": "Phase 3：ビルド",
+   "prompt": "<span class=\"q\">▷</span> 1コマンドで mp4 まで",
+   "note": "音声 → 字幕同期 → 録画 → 結合<br>→ 音量・A/V 検査 → iCloud",
+   "badge": "自動で納品",
+   "text": "あとはビルド1コマンド。VOICEVOXで音声を作り、whisperで字幕を合わせ、Playwrightでフレームを録画し、ffmpegで結合する。音量とA/Vのずれも自動で検査して、レビュー用のiCloudフォルダまでコピーする。",
+   "tail_ms": 600,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 1200
+    },
+    {
+     "t": "cmd",
+     "s": "python3 build_clip.py ../../scripts/ccop/op01-esc/clip.json --tag v3"
+    },
+    {
+     "t": "sys",
+     "s": "[VOICEVOX ok] vox/d1.wav  青山龍星/ノーマル(id=13)  (12.57s)"
+    },
+    {
+     "t": "sys",
+     "s": "[cut] d1 [nar] voice 12.6s beat=0.14s tail=400ms -> cut_d1.mp4"
+    },
+    {
+     "t": "sys",
+     "s": "[VOICEVOX ok] vox/d2.wav  青山龍星/ノーマル(id=13)  (7.98s)"
+    },
+    {
+     "t": "sys",
+     "s": "[cut] d2 [nar] voice 8.0s beat=0.19s tail=900ms -> cut_d2.mp4"
+    },
+    {
+     "t": "sys",
+     "s": "  …"
+    },
+    {
+     "t": "sys",
+     "s": "[bgm] ED only: start 45.6s len 15.1s"
+    },
+    {
+     "t": "sys",
+     "s": "[loud] trim +2.0dB (I -12.4 -> -10.4)"
+    },
+    {
+     "t": "gd",
+     "s": "total 60.6s (1.01min)  audio aac,48000,2  I=-10.6 LUFS"
+    },
+    {
+     "t": "gd",
+     "s": "A/V drift: none"
+    },
+    {
+     "t": "gd",
+     "s": "CHECK: PASS  (尺50–130s / aac48k2ch / I=-10.4±0.3 / drift無し)"
+    },
+    {
+     "t": "sys",
+     "s": "[icloud] …/kirin-ai-lab-review/ccop/op01-esc/op01-esc_v3.mp4"
+    },
+    {
+     "t": "sys",
+     "s": "  md5 src ce4a1bd7…  md5 dst ce4a1bd7…  一致"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "n7",
+   "type": "demo",
+   "tbar": "op01-esc_v3.mp4（完成形）",
+   "left_html": "<img class=\"shot\" src=\"file://{{CLIP}}/../op01-esc/build/kurono/preview/d2.png\">",
+   "cap": "完成形",
+   "prompt": "<span class=\"q\">▷</span> #01 Esc で止める",
+   "note": "左：端末の再現<br>右：要点<br>下：フルセリフ字幕",
+   "badge": "1本 ≈ 1分",
+   "text": "できあがりがこれだ。左が再現した端末、右が要点、下がフルセリフの字幕。1本、およそ1分。この型で、基本操作を1本ずつ積み上げていく。",
+   "tail_ms": 1200,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  }
+ ]
+}

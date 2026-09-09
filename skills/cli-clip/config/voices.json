@@ -1,0 +1,8 @@
+{
+  "_note": "ナレーター候補（VOICEVOX style_id）。build_clip --voices all で全部、キー指定で1つ。名前は /speakers と一致させる。",
+    "narrators": {
+    "kurono": {"name": "玄野武宏",   "style": "ノーマル",   "id": 11, "speed": 1.05, "pitch": 0.0, "intonation": 1.1},
+    "no7":    {"name": "No.7",       "style": "アナウンス", "id": 30, "speed": 1.05, "pitch": 0.0, "intonation": 1.1},
+    "metan":  {"name": "四国めたん", "style": "ノーマル",   "id": 2,  "speed": 1.05, "pitch": 0.0, "intonation": 1.1}
+  }
+}

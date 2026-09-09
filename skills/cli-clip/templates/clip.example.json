@@ -1,0 +1,137 @@
+{
+ "_license": "Copyright (c) 2026 <your name>",
+ "_note": "cli-clip 台本の雛形。構成＝タイトル→説明スライド→デモ。セリフは原文句読点のまま（TTS＝字幕）。端末の行は実録の清書＝捏造しない。 meta.voices を書かなければビルド時に声の選択が出る（kurono/no7/metan/all）。",
+ "meta": {
+  "id": "opNN-name",
+  "series": "Claude Code 基本操作",
+  "no": "NN",
+  "op": "操作名",
+  "version": "Claude Code vX.Y.Z で収録（YYYY-MM-DD）",
+  "capture_source": "clips/opNN-name/capture/transcript.md"
+ },
+ "readings": {},
+ "cuts": [
+  {
+   "id": "t0",
+   "type": "card",
+   "kind": "title",
+   "fixed_ms": 2200
+  },
+  {
+   "id": "x1",
+   "type": "demo",
+   "tbar": "操作名 — 説明",
+   "left_html": "<h2>操作名 <span style=\"color:#2E7D5B\">— 何が起きる？</span></h2><div class=\"sub\">Claude Code vX.Y.Z で収録</div><div class=\"flow\" style=\"height:auto;margin-top:26px;gap:26px\"><div class=\"fbox\"><div class=\"t\">① …</div><div class=\"b\">…</div></div><div class=\"fbox d\"><div class=\"t\">② …</div><div class=\"b\">…</div></div><div class=\"fbox h\"><div class=\"t\">③ …</div><div class=\"b\">…</div></div></div>",
+   "cap": "この操作でできること",
+   "prompt": "<span class=\"q\">▷</span> 一言",
+   "note": "① …<br>② …<br>③ …",
+   "badge": "14字以内",
+   "text": "…。では、実際にやってみよう。",
+   "tail_ms": 600,
+   "S": [
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "d1",
+   "type": "demo",
+   "cap": "状況",
+   "prompt": "<span class=\"q\">▷</span> 投入プロンプト",
+   "note": "補足",
+   "badge": "14字以内",
+   "text": "…",
+   "tail_ms": 400,
+   "S": [
+    {
+     "t": "cmd",
+     "s": "claude"
+    },
+    {
+     "t": "gap"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 1500
+    },
+    {
+     "t": "user",
+     "s": "> …"
+    },
+    {
+     "t": "out",
+     "s": "⏺ …"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "type": "demo",
+   "cap": "操作",
+   "prompt": "<span class=\"q\">▷</span> <b>キー</b>を押す",
+   "note": "実表示：…",
+   "badge": "…",
+   "text": "…",
+   "tail_ms": 900,
+   "S": [
+    {
+     "t": "user",
+     "s": "> …"
+    },
+    {
+     "t": "out",
+     "s": "⏺ …"
+    },
+    {
+     "t": "beat",
+     "talk": true,
+     "dur": 2500
+    },
+    {
+     "t": "key",
+     "s": "Esc"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  …（実表示・原文ママ）"
+    },
+    {
+     "t": "ret"
+    },
+    {
+     "t": "beat"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "type": "demo",
+   "cap": "結果と意味づけ",
+   "prompt": "<span class=\"q\">▷</span> …",
+   "note": "…",
+   "badge": "…",
+   "text": "…（最後のカット。そのまま終わる）",
+   "tail_ms": 1200,
+   "S": [
+    {
+     "t": "user",
+     "s": "> …"
+    },
+    {
+     "t": "sys",
+     "s": "  ⎿  …"
+    },
+    {
+     "t": "beat",
+     "talk": true
+    }
+   ]
+  }
+ ]
+}

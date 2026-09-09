@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+skills/cli-clip/config/env.json
+clips/**/build/
+voice-samples/
+*.webm
+__pycache__/

@@ -1,0 +1,6 @@
+{
+  "name": "cli-clip",
+  "private": true,
+  "description": "cli-clip: Playwright/Chromium で 1920x1080 フレームを録画する（cli-clip-setup が npm install する）",
+  "dependencies": { "playwright": "1.61.1" }
+}

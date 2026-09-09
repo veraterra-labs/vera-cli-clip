@@ -1,0 +1,23 @@
+# cli-clip #01 Esc で止める — 実機キャプチャ手順（capture_session.sh 用）
+# 練習フォルダ: make_practice_dir.sh で生成した隔離ディレクトリ。実ファイルでは走らせない。
+# ※ op01 の v1 は cc02 の実機キャプチャ（scripts/cc02/capture/01-esc）を流用したため、本ファイルは再収録用。
+# 新規フォルダの信頼確認が出ていれば「Yes, I trust this folder」を選ぶ（既定は "No, exit" なので Enter だけは不可）
+trust
+snap ready
+type このフォルダ、いい感じに整理して
+enter
+say AIが自走を始める（読む系は確認なしで進むことが多い）
+waitfor Listed|Read|Searched 60
+wait 2
+snap running
+key Escape
+wait 1.5
+snap after_esc
+say 言い直し（確認プロンプトが出るはず）
+type 画像ファイルだけ、「画像」フォルダにまとめて。ほかは触らないで
+enter
+waitfor Do you want|proceed 90
+snap redirect_perm
+enter
+waitfor 完了|移動しました|Done 90
+snap redirect_done

@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Tsuyoshi Hemmi -->
+<!-- cli-clip フレーム 1920x1080（ナレーター1人・キャラなし）。
+     ?spec=<JSON> で受け取る: {theme:{channel,series,colors,font_sans,font_mono}, meta:{no,op,...}, cut:{...}, beatms, tailms, fast, subs}
+       cut.type='card'  … kind='title'（番号＋操作名だけ。sub / show_version を書いたときだけ追加表示）
+       cut.type='demo'  … 左=擬似端末（実録の清書）or left_html（説明スライド）／右=要点パネル／下=フルセリフ字幕
+     端末の行タイプ: cmd sys user out pm code gd add del menusel warn gap ret clear esc key beat
+     window.__beatAt にビート開始秒、window.__done で録画終了（cap_frame.mjs が読む）。 -->
+<meta charset="utf-8">
+<style>
+  :root{ --bg:#0E1620; --fg:#E6EDF3; --dim:#8aa0b3; --green:#4FD08A; --gold:#C9A227; --user:#7FB8FF;
+    --perm:#FFC857; --code:#9ED0FF; --red:#ff7b72; --ink:#16324F; --paper:#F2F7FB; --line:#D7E2EC; --pri:#2E7D5B;
+    --sans:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans CJK JP","Noto Sans JP","Yu Gothic",sans-serif;
+    --mono:"SFMono-Regular",Menlo,Consolas,"Noto Sans Mono CJK JP","DejaVu Sans Mono","Hiragino Sans",monospace; }
+  html,body{margin:0;background:#0A0F16}
+  .stage{width:1920px;height:1080px;position:relative;overflow:hidden;background:linear-gradient(160deg,#0E1620,#0A1119);font-family:var(--sans)}
+  .hdr{position:absolute;top:0;left:0;right:0;height:64px;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 28px;color:#fff;z-index:5}
+  .hdr .l{font-size:30px;font-weight:800;letter-spacing:.02em} .hdr .l .g{color:var(--gold)}
+  .hdr .r{font-size:24px;color:#bcd0e2;font-weight:700} .hdr .r b{color:var(--gold);margin-right:12px}
+  .goldline{position:absolute;top:64px;left:0;right:0;height:5px;background:var(--gold);z-index:5}
+
+  .demo{position:absolute;left:24px;top:88px;width:1380px;height:912px;background:#000;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.45);overflow:hidden}
+  .lp{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none} .lp.on{opacity:1}
+  .term{background:var(--bg);color:var(--fg);font-family:var(--mono)}
+  .tbar{position:absolute;top:0;left:0;right:0;height:46px;background:var(--ink);display:flex;align-items:center;padding:0 20px;font-size:19px;color:#cfe0ee;letter-spacing:.04em}
+  .tbar .rec{color:#ff5a5a;margin-right:14px} .tbar .sp{margin-left:auto;color:#9fb4c6}
+  .tbody{position:absolute;top:46px;left:0;right:0;bottom:0;padding:18px 26px 150px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+  #out{white-space:pre-wrap;word-break:break-word;font-size:38px;line-height:1.5}
+  .dim{color:var(--dim)} .green{color:var(--green)} .gd{color:var(--gold)} .user{color:var(--user)}
+  .pm{color:var(--perm)} .code{color:var(--code)} .addl{color:var(--green)} .dell{color:var(--red)}
+  .menusel{color:var(--user);font-weight:800} .warn{color:var(--perm)}
+  .cursor{display:inline-block;width:.55em;height:1.05em;background:var(--fg);vertical-align:-.16em;animation:b 1s steps(1) infinite}
+  @keyframes b{50%{opacity:0}}
+  .keycap{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:8;font-family:var(--mono);font-size:76px;font-weight:800;color:#fff;letter-spacing:.06em;
+    background:rgba(22,50,79,.94);border:4px solid #fff;border-bottom-width:10px;border-radius:18px;padding:22px 66px;box-shadow:0 16px 48px rgba(0,0,0,.6);opacity:0;transition:opacity .12s;white-space:nowrap}
+  .keycap.on{opacity:1}
+
+  /* 説明スライド・任意HTML面（left_html） */
+  .docv{background:var(--paper);color:var(--ink);padding:36px 44px;box-sizing:border-box}
+  .docv h2{margin:0 0 8px;font-size:38px;color:var(--ink)} .docv .sub{font-size:22px;color:#5a6f83;margin-bottom:22px}
+  .mdpage{background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:34px 44px;font-family:var(--mono)}
+  .mdpage .h1{font-size:44px;font-weight:900;border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:22px}
+  .mdpage .li{font-size:33px;line-height:1.85;color:#2b3440}
+  .mdpage .cb{display:inline-block;width:30px;height:30px;border:3px solid #8ba0b4;border-radius:6px;margin-right:16px;vertical-align:-4px;text-align:center;line-height:26px;font-size:24px;color:var(--pri);font-weight:900}
+  .b4a{display:flex;gap:20px;align-items:stretch;margin-top:6px} .b4a .pane{flex:1;display:flex;flex-direction:column;gap:12px;min-width:0}
+  .b4a .plabel{font-size:24px;font-weight:900;border-radius:999px;padding:6px 22px;align-self:flex-start}
+  .b4a .plabel.now{background:rgba(22,50,79,.08);border:2px solid var(--ink);color:var(--ink)} .b4a .plabel.wish{background:#FFF2CC;border:2px solid var(--gold);color:#8a6d00} .b4a .plabel.res{background:#FDEBE7;border:2px solid #C0492E;color:#C0492E}
+  .b4a .arrow{align-self:center;font-size:60px;font-weight:900;color:var(--gold);flex:none} .b4a .arrow.neq{color:#C0492E}
+  .b4a .mdpage{flex:1;padding:22px 28px} .b4a .mdpage .h1{font-size:31px} .b4a .mdpage .li{font-size:24px;line-height:1.75}
+  .tip{background:linear-gradient(90deg,#1B2533,#16324F);border-left:10px solid var(--gold);border-radius:12px;padding:20px 34px;color:#fff;font-size:30px;font-weight:800;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+  .tip small{display:block;font-size:22px;color:#bcd0e2;font-weight:700;margin-top:8px}
+  .codev{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:27px;line-height:1.55;padding:30px 36px;white-space:pre-wrap;word-break:break-all;box-sizing:border-box;height:100%;overflow:hidden}
+  .codev .k{color:#9ED0FF} .codev .s{color:#4FD08A} .codev .c{color:#8aa0b3} .codev .hl{background:rgba(201,162,39,.25);border-radius:4px}
+  .flow{display:flex;flex-direction:column;gap:22px;justify-content:center;height:100%;box-sizing:border-box} .frow{display:flex;align-items:center;gap:16px}
+  .fbox{flex:1;background:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 6px 18px rgba(0,0,0,.10);border-top:10px solid var(--pri);min-width:0}
+  .fbox.h{border-top-color:var(--gold)} .fbox.d{border-top-color:var(--ink)}
+  .fbox .t{font-size:30px;font-weight:900;color:var(--ink);margin-bottom:8px} .fbox .b{font-size:23px;color:#3B4F62;font-weight:700;line-height:1.45}
+  .farrow{font-size:44px;font-weight:900;color:var(--gold);flex:none}
+  .who{display:inline-block;font-size:20px;font-weight:900;border-radius:999px;padding:4px 14px;margin-bottom:10px}
+  .who.h{background:#FFF2CC;border:2px solid var(--gold);color:#8a6d00} .who.a{background:rgba(46,125,91,.10);border:2px solid var(--pri);color:var(--pri)}
+  .tbl{width:100%;border-collapse:separate;border-spacing:0 12px}
+  .tbl td{background:#fff;padding:18px 24px;font-size:28px;font-weight:800;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .tbl td:first-child{border-radius:14px 0 0 14px;color:#3B4F62;width:34%} .tbl td:last-child{border-radius:0 14px 14px 0}
+  .tbl td .free{display:inline-block;background:rgba(46,125,91,.10);border:2px solid var(--pri);color:var(--pri);font-size:20px;border-radius:999px;padding:2px 12px;margin-left:12px}
+  .shot{width:100%;height:100%;object-fit:contain;background:#0A0F16;display:block}
+
+  .telop{position:absolute;left:24px;width:1380px;bottom:36px;box-sizing:border-box;z-index:6;background:linear-gradient(90deg,rgba(22,50,79,.96),rgba(22,50,79,.80));
+    border-left:8px solid var(--gold);border-radius:8px;padding:16px 28px;color:#fff;font-size:42px;font-weight:800;letter-spacing:.02em;box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .35s}
+  .telop.show{opacity:1}
+  .panel{position:absolute;left:1428px;top:88px;width:468px;height:912px;background:var(--paper);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:22px 24px;box-sizing:border-box;color:var(--ink)}
+  .panel .cap{font-size:20px;font-weight:800;color:var(--pri);letter-spacing:.06em;margin-bottom:10px}
+  .panel .prompt{background:#fff;border:2px solid var(--line);border-radius:12px;padding:16px 18px;font-size:27px;line-height:1.5;font-weight:700;color:var(--ink)} .panel .prompt .q{color:var(--pri)}
+  .panel .div{height:1px;background:var(--line);margin:20px 0}
+  .panel .note{font-size:24px;line-height:1.55;color:#3B4F62;font-weight:700}
+  .panel .badge{display:inline-block;margin-top:14px;background:#FFF2CC;border:2px solid var(--gold);color:#8a6d00;font-size:22px;font-weight:800;border-radius:999px;padding:6px 16px}
+
+  .card{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 160px;z-index:3}
+  .card.on{display:flex}
+  .card .kicker{font-size:34px;font-weight:800;color:var(--gold);letter-spacing:.12em;margin-bottom:26px}
+  .card .ct{font-size:84px;font-weight:900;color:#fff;line-height:1.25;letter-spacing:.02em;text-shadow:0 4px 20px rgba(0,0,0,.5)} .card .ct .g{color:var(--gold)}
+  .card .rule{width:120px;height:6px;background:var(--gold);border-radius:3px;margin:40px 0 0}
+  .card .cs{margin-top:34px;font-size:44px;font-weight:800;color:#cfe0ee;line-height:1.55}
+  .card .ver{position:absolute;bottom:44px;right:48px;font-size:22px;color:#8aa0b3;font-weight:700}
+</style>
+
+<div class="stage" id="stage">
+  <div class="hdr"><div class="l" id="hl"></div><div class="r" id="hr"></div></div>
+  <div class="goldline"></div>
+  <div class="demo" id="demo">
+    <div class="lp term on" id="lpTerm">
+      <div class="tbar"><span class="rec">● REC</span><span id="tbar">ターミナル</span><span class="sp" id="clk">▶ 1×  00:00</span></div>
+      <div class="tbody"><div id="out"></div></div>
+      <div class="keycap" id="keycap">Esc</div>
+    </div>
+    <div class="lp docv" id="lpDoc"></div>
+  </div>
+  <div class="telop" id="telop"></div>
+  <div class="panel" id="panel">
+    <div class="cap" id="pcap"></div><div class="prompt" id="pprompt"></div><div class="div"></div>
+    <div class="note" id="pnote"></div><div class="badge" id="pbadge"></div>
+  </div>
+  <div class="card" id="card">
+    <div class="kicker" id="ck"></div><div class="ct" id="ct"></div><div class="rule" id="crule"></div><div class="cs" id="cs"></div><div class="ver" id="cver"></div>
+  </div>
+</div>
+
+<script>
+const Q=new URLSearchParams(location.search);
+const SPEC=JSON.parse(Q.get('spec')||'{}');
+const THEME=SPEC.theme||{}, META=SPEC.meta||{}, CUT=SPEC.cut||{type:'card',kind:'title'};
+const BEATMS=+(SPEC.beatms||1700), TAILMS=+(SPEC.tailms||0), FAST=!!SPEC.fast, SUBS=SPEC.subs||null;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const $=id=>document.getElementById(id);
+// テーマ適用
+const rs=document.documentElement.style, C=THEME.colors||{};
+if(C.ink)rs.setProperty('--ink',C.ink); if(C.gold)rs.setProperty('--gold',C.gold); if(C.primary)rs.setProperty('--pri',C.primary);
+if(C.paper)rs.setProperty('--paper',C.paper); if(C.termbg)rs.setProperty('--bg',C.termbg);
+if(THEME.font_sans)rs.setProperty('--sans',THEME.font_sans); if(THEME.font_mono)rs.setProperty('--mono',THEME.font_mono);
+$('hl').innerHTML=`${THEME.channel||'cli-clip'}<span class="g"> ｜ </span>${META.series||THEME.series||''}`;
+$('hr').innerHTML=(META.no?`<b>#${META.no}</b>`:'')+(META.op||'');
+// 録画ハートビート（静止シーンでも毎フレーム微小再描画→webmが実時間長になる）
+(()=>{ const hb=document.createElement('div');
+  hb.style.cssText='position:absolute;left:2px;bottom:2px;width:3px;height:3px;z-index:99;opacity:.06;pointer-events:none';
+  $('stage').appendChild(hb); let i=0; (function f(){ i^=1; hb.style.background=i?'#0B1119':'#0A0F16'; requestAnimationFrame(f); })(); })();
+async function runSubs(){ const t=$('telop'); t.classList.add('show'); for(const [txt,ms] of SUBS){ t.textContent=txt; await sleep(ms); } }
+
+async function runDemo(){
+  const term=!CUT.left_html;
+  $('lpTerm').classList.toggle('on',term); $('lpDoc').classList.toggle('on',!term);
+  if(!term) $('lpDoc').innerHTML=CUT.left_html;
+  $('tbar').textContent=CUT.tbar||'ターミナル';
+  $('pcap').textContent=CUT.cap||''; $('pprompt').innerHTML=CUT.prompt||''; $('pnote').innerHTML=CUT.note||'';
+  $('pbadge').textContent=CUT.badge||''; $('pbadge').style.display=CUT.badge?'':'none';
+  const out=$('out'), clk=$('clk');
+  const cls={cmd:'',sys:'dim',user:'user',out:'',pm:'pm',code:'code',gd:'gd',add:'addl',del:'dell',menusel:'menusel',warn:'warn',done:'gd',mv:'green'};
+  const TYPED={cmd:1,user:1};
+  let t0=null; function tick(){ if(!t0)t0=performance.now(); const e=Math.floor((performance.now()-t0)/1000);
+    clk.textContent='▶ 1×  '+String(Math.floor(e/60)).padStart(2,'0')+':'+String(e%60).padStart(2,'0'); }
+  function line(c){ const d=document.createElement('div'); if(c)d.className=c; out.appendChild(d); return d; }
+  function curOn(d){ const s=document.createElement('span'); s.className='cursor'; d.appendChild(s); return s; }
+  async function typeInto(d,s,sp){ const cur=curOn(d); for(const ch of s){ cur.insertAdjacentText('beforebegin',ch); tick(); await sleep(sp);} return cur; }
+  const iv=setInterval(tick,200);
+  let pre=FAST, beatT0=null;
+  for(const st of (CUT.S||[{t:'beat',talk:true}])){
+    if(st.t==='gap'){ line(); await sleep(pre?40:160); continue; }
+    if(st.t==='beat'){ pre=false;
+      if(beatT0===null){ beatT0=performance.now(); window.__beatAt=beatT0/1000; if(SUBS) runSubs(); }
+      if(st.dur!=null){ await sleep(st.dur); }
+      else { const rem=BEATMS-(performance.now()-beatT0); if(rem>0) await sleep(rem); }
+      continue; }
+    if(st.t==='esc'||st.t==='key'){ const k=$('keycap'); k.textContent=st.s||'Esc'; k.classList.add('on'); await sleep(st.dur||650); k.classList.remove('on'); await sleep(250); continue; }
+    if(st.t==='ret'){ const d=line(); d.append('❯ '); curOn(d); tick(); await sleep(pre?30:260); continue; }
+    if(st.t==='clear'){ out.innerHTML=''; await sleep(pre?30:200); continue; }
+    if(pre){ const d=line(cls[st.t]); d.textContent=(st.t==='cmd'?'$ ':'')+st.s; tick(); await sleep(30); continue; }
+    const d=line(cls[st.t]);
+    if(st.t==='cmd'){ d.append('$ '); await typeInto(d,st.s,28); await sleep(220); }
+    else if(TYPED[st.t]){ await typeInto(d,st.s,22); await sleep(200); }
+    else { d.textContent=st.s; await sleep(st.wait!=null?st.wait:(st.t==='code'?300:340)); }
+  }
+  clearInterval(iv); await sleep(800); await sleep(TAILMS); window.__done=true;
+}
+async function runCard(){
+  for(const id of ['demo','panel','telop']) $(id).style.display='none';
+  $('card').classList.add('on');
+  $('ck').textContent=META.no?`#${META.no}`:'';
+  $('ct').innerHTML=CUT.title||META.op||'';
+  $('cs').innerHTML=CUT.sub||'';
+  if(!CUT.sub){ $('cs').style.display='none'; $('crule').style.display='none'; }
+  $('cver').textContent=CUT.show_version?(META.version||''):'';
+  await sleep(250); window.__beatAt=performance.now()/1000; await sleep(BEATMS); await sleep(400); await sleep(TAILMS); window.__done=true;
+}
+if(CUT.type==='card') runCard(); else runDemo();
+</script>

@@ -1,0 +1,70 @@
+# cli-clip 読み辞書（TTS直前にのみ適用。字幕は原文のまま）。上から順に置換するので、長い語・包含する語を先に書く。
+# 語	よみ
+ChatGPT	チャットジーピーティー
+Claude Code	クロードコード
+Claude	クロード
+claude	クロード
+Gemini	ジェミニ
+GPT	ジーピーティー
+Bard	バード
+OpenAI	オープンエーアイ
+Anthropic	アンソロ・ピック
+Google AI Studio	グーグルエーアイスタジオ
+Google	グーグル
+生成AI	せいせいエーアイ
+AI	エーアイ
+麒麟	きりん
+LLM	エルエルエム
+LMM	エル・エム・エム
+API	エーピーアイ
+Claude Cowork	クロード・コワーク
+Cowork	コワーク
+Imagen	イマジェン
+Text-to-Speech	テキスト・トゥー・スピーチ
+Antigravity CLI	アンチグラビティシーエルアイ
+Codex CLI	コーデックスシーエルアイ
+Antigravity	アンチグラビティ
+Codex	コーデックス
+CLI	シーエルアイ
+Web	ウェブ
+IDE	アイディーイー
+Netflix	ネットフリックス
+NASA	ナサ
+Python	パイソン
+TOP10	トップテン
+URL	ユーアールエル
+PC	ピーシー
+GO	ゴー
+matplotlib	マットプロットリブ
+表計算	ひょうけいさん
+如かず	しかず
+片づ	かたづ
+Esc	エスケープ
+/rewind	リワインド
+TODO.md	トゥードゥー・エムディー
+①	ひとつ、
+②	ふたつ、
+③	みっつ、
+ccop-clip	シーシーオーピー・クリップ
+cli-clip	シーエルアイ・クリップ
+clip.json	クリップ・ジェイソン
+lint	リント
+whisper	ウィスパー
+Playwright	プレイライト
+Chromium	クロミウム
+ffmpeg	エフエフエムペグ
+tmux	ティーマックス
+iCloud	アイクラウド
+VOICEVOX	ボイスボックス
+JSON	ジェイソン
+A/V	エーブイ
+BGM	ビージーエム
+mp4	エムピーフォー
+CLAUDE.md	クロード・エムディー
+/clear	クリア
+/init	イニット
+/compact	コンパクト
+/permissions	パーミッションズ
+/model	モデル
+Shift+Tab	シフト・タブ
+Enter	エンター
