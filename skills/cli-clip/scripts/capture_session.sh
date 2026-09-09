@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 # cli-clip 実機キャプチャ（macOS / WSL Ubuntu 共通・tmux）：tmux 上で本物の Claude Code を起動し、steps ファイルどおりに操作して
 # 画面（pane）を raw/NN_label.txt にスナップショット保存する。＝バックグラウンドで「実録」を取る。
 #

@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """字幕の強制アライメント（whisper.cpp）。cli-clip 版＝kirin-ai-lab/pipeline/ds_align.py から移植。
 
 用途は文字起こしではなく、台本の字幕チャンク境界を実発話の時刻（実ポーズ）に合わせること。文字は台本が正。

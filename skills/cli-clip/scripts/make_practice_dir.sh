@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 # cli-clip 練習フォルダ生成：cc02 実機キャプチャで使った「散らかったダミー19ファイル」相当を隔離ディレクトリに作る。
 # 使い方: make_practice_dir.sh <dir>   （既存なら中身を作り直す）
 set -eu

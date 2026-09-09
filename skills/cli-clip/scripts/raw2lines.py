@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """raw pane スナップショット → clip.json の画面ステップ S の下書き（清書の叩き台）。cli-clip 版。
 
 使い方: python3 raw2lines.py <raw/NN_label.txt> [--from "<regex>"]
