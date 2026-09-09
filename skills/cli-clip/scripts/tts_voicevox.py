@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Tsuyoshi Hemmi
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """cli-clip の音声＝VOICEVOX ENGINE（ローカル・無料）。macOS / WSL Ubuntu 共通。
 
 使い方: python3 tts_voicevox.py "<text>" <out.wav> [voice_key|style_id]

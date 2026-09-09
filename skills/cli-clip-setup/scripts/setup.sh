@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2026 Tsuyoshi Hemmi
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 # cli-clip-setup: cli-clip の実行環境を固定バージョンで整える（macOS arm64 / WSL Ubuntu x64）。
 #   ./setup.sh check     … 依存の有無を表で出す（何も入れない）
 #   ./setup.sh install   … 足りないものを入れる（VOICEVOX ENGINE / whisper.cpp+model / Playwright+Chromium / ffmpeg / tmux / フォント）

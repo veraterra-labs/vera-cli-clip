@@ -3,7 +3,7 @@ name: cli-clip
 description: Claude Code などCLIツールの「使い方」を1操作1本・1〜2分（最長5分）の解説動画にする。構成はタイトル→説明スライド→デモで固定。実機セッションを tmux で裏で回して実録を取り、清書した擬似ターミナル＋VOICEVOX ナレーション（3声から選択）＋whisper 同期字幕を自動生成して mp4 化する。操作とデモ題材が決まったら使う。環境は cli-clip-setup で固定（macOS / WSL Ubuntu）。
 ---
 
-<!-- Copyright (c) 2026 Tsuyoshi Hemmi -->
+<!-- Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT -->
 # cli-clip ─ CLI の使い方解説クリップの作り方（AI向け作業手順）
 
 **対象**: Claude Code をはじめとする CLI ツールの「この操作は何をするか」を、**1操作＝1本＝基本1〜2分・最長5分**で見せる短尺動画。

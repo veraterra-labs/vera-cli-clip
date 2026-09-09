@@ -1,5 +1,5 @@
 {
- "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0",
+ "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT",
  "_note": "ccop-clip スキルの概要とデモ（v2: 構成＝タイトル→説明スライド→デモ。エンディング・BGMなし。ナレーター＝青山龍星のみ）。端末表示は capture/raw/（2026-09-08 スモークテスト実録・Claude Code v2.1.263）と op01 の実ビルドログの清書。パスは表示用に短縮（/tmp/ccop-practice/op01）している以外は原文ママ。",
  "meta": {
   "id": "skill-overview",

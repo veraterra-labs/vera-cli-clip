@@ -108,7 +108,8 @@ clips/<id>/
 ## 7. クレジット・ライセンス
 
 - 動画の概要欄に **「VOICEVOX:<話者名>」** を必ず表記する（玄野武宏／No.7／四国めたん。各キャラの利用規約は https://voicevox.hiroshiba.jp/ ）。
-- 本リポジトリは現時点で社内利用（`LICENSE.md`）。外部ソフトウェア（VOICEVOX ENGINE・whisper.cpp・Playwright・ffmpeg）は各々のライセンスに従う。
+- 本リポジトリのコード・スクリプト・テンプレートは **MIT License**（`LICENSE`）。ドキュメント（SKILL.md・README・docs）も同条件で利用可。
+- 同梱しない外部ソフトウェア（VOICEVOX ENGINE・whisper.cpp・Playwright・ffmpeg）は各々のライセンスに従う。VOICEVOX の各キャラクター音源は個別の利用規約あり。
 
 ---
-<sub>Copyright (c) 2026 Tsuyoshi Hemmi</sub>
+<sub>Copyright (c) 2026 Tsuyoshi Hemmi — MIT License</sub>

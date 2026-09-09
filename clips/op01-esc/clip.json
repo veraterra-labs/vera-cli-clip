@@ -1,5 +1,5 @@
 {
- "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: CC BY-NC-SA 4.0",
+ "_license": "Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT",
  "_note": "cli-clip #01 Esc で止める（v4: 構成＝タイトル→説明スライド→デモ。エンディング・BGMなし。ナレーター＝青山龍星のみ。2026-09-09 キリ決定）。端末表示＝ scripts/cc02/capture/01-esc/transcript.md（Claude Code v2.1.207 実機・テイク2）の清書。捏造なし。",
  "meta": {
   "id": "op01-esc",

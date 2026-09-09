@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Tsuyoshi Hemmi
+// Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 // フレームHTMLを 1920x1080 で録画→webm（cli-clip 版）。使い方: node cap_frame.mjs <htmlFile> <outDir> [w] [h] [query]
 // playwright はスキル直下の node_modules から読む（cli-clip-setup が `npm install` する）。
 import { createRequire } from 'node:module';

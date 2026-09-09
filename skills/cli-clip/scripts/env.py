@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Tsuyoshi Hemmi
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """cli-clip 実行環境の解決（macOS / WSL Ubuntu 共通）。
 
 優先順: 環境変数 > config/env.json（cli-clip-setup が書く） > 既定パス（~/.local/opt/cli-clip/...） > PATH。

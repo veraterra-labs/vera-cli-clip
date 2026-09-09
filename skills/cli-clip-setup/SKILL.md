@@ -3,7 +3,7 @@ name: cli-clip-setup
 description: cli-clip（CLIツールの使い方解説クリップ生成スキル）の実行環境を固定バージョンで整える。macOS(arm64) と WSL Ubuntu(x64) 対応。VOICEVOX ENGINE・whisper.cpp・Playwright+Chromium・ffmpeg・tmux を ~/.local/opt/cli-clip に導入し、config/env.json にパスを固定する。初回セットアップ・「cli-clip が動かない」「依存を確認して」の時に使う。
 ---
 
-<!-- Copyright (c) 2026 Tsuyoshi Hemmi -->
+<!-- Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT -->
 # cli-clip-setup ─ 実行環境の固定セットアップ
 
 cli-clip は **LLM（Claude Code 本体）以外すべて無料・ローカル**で動く。このスキルは、その環境を同じバージョンで揃える。

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Tsuyoshi Hemmi
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """ナレーター候補の聞き比べサンプル（VOICEVOX・ローカル）。
 
 使い方: python3 voice_samples.py [出力dir] [style_id ...] | all | styles

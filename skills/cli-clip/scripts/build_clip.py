@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Tsuyoshi Hemmi
+# Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT
 """cli-clip ビルダ：clip.json（台本＋画面ステップ＋パネル文言の正本）→ mp4。macOS / WSL Ubuntu 共通。
 
   TTS(VOICEVOX) → 字幕を whisper.cpp で実発話に同期 → templates/clip_frame.html を Playwright で録画
