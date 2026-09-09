@@ -100,6 +100,9 @@ def lint(spec):
         if len(b) > 14: warns.append(f"[{cid}] 右パネルのバッジ {len(b)}字 > 14字: {b}")
         if c.get("type") == "demo" and not c.get("S") and not c.get("left_html"): warns.append(f"[{cid}] demo なのに S も left_html も無い")
         if c.get("type") == "demo" and c.get("S") and not any(s.get("t") == "beat" for s in c["S"]): warns.append(f"[{cid}] S に beat が無い")
+    sub = spec["meta"].get("subtitle") or ""
+    if not sub: warns.append("meta.subtitle が無い（タイトルカードの効果サブタイトル。例: 動き出したAIを、その場で止める）")
+    elif len(re.sub(r"<[^>]+>", "", sub)) > 24: warns.append(f"meta.subtitle {len(sub)}字 > 24字（タイトルカードで2行を超える）: {sub}")
     kinds = [c.get("type") + ":" + str(c.get("kind") or ("slide" if c.get("left_html") else "term")) for c in spec["cuts"]]
     if not kinds or kinds[0] != "card:title": warns.append("構成: 先頭はタイトルカード（type=card）にする")
     if len(kinds) > 1 and kinds[1] != "demo:slide": warns.append("構成: 2番目は説明スライド（left_html）にする")

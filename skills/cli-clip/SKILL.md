@@ -7,7 +7,7 @@ description: Claude Code などCLIツールの「使い方」を1操作1本・1�
 # cli-clip ─ CLI の使い方解説クリップの作り方（AI向け作業手順）
 
 **対象**: Claude Code をはじめとする CLI ツールの「この操作は何をするか」を、**1操作＝1本＝基本1〜2分・最長5分**で見せる短尺動画。
-**構成は固定**: `タイトル（番号＋操作名）→ 説明スライド（できることを一文＋補足）→ デモ（実録の清書）で完結`。エンディング・BGM・キャラ掛け合いは付けない。
+**構成は固定**: `タイトル（操作名＋効果がわかるサブタイトル）→ 説明スライド（できることを一文＋補足）→ デモ（実録の清書）で完結`。エンディング・BGM・キャラ掛け合いは付けない。
 **語り口は固定**: 講師スタイルの **ですます調**・断定を避ける・**開発用語を使わない**（§4.1〜4.2）。視聴者は開発者とは限らない。
 **環境は固定**（`cli-clip-setup`）: 音声＝VOICEVOX、字幕同期＝whisper.cpp、録画＝Playwright/Chromium、合成＝ffmpeg、実機操作＝tmux。LLM 以外すべて無料・ローカル。
 
@@ -62,7 +62,7 @@ Phase 5  公開パッケージ（タイトル・概要欄・収録バージョ�
 ```
 
 ## 2. Phase 0 ─ 会話で決めること
-1. 操作（1本1操作。混ぜない。2分を超えるなら操作を割る）
+1. 操作（1本1操作。混ぜない。2分を超えるなら操作を割る）と、**タイトル**＝操作名（`meta.op`）＋効果がわかるサブタイトル（`meta.subtitle`、24字以内。例「動き出したAIを、その場で止める」）。番号は付けない（`meta.no` は並び順の管理用で画面に出ない）
 2. デモ題材（練習フォルダで何を頼むか。実データ・実リポジトリは映さない）
 3. 見せ場（実録で必ず取る画面状態。例 `Interrupted · What should Claude do instead?`）
 4. **声**: 人から指定があればそれを `--voices` に渡す。**指定が無ければ、この場で選択肢を出して聞く**
@@ -102,10 +102,10 @@ CLAUDE_ARGS="--permission-mode default" bash $S/capture_session.sh "$P" clips/<i
 ## 4. Phase 2 ─ clip.json（正本）
 `templates/clip.example.json` を雛形に。構造:
 ```jsonc
-{ "meta": { "id","series","no","op","version","capture_source", "voices":"all"(任意), "max_sec":130(任意), "terms_ok":[…](任意) },
+{ "meta": { "id","series","op","subtitle","version","capture_source", "voices":"all"(任意), "max_sec":130(任意), "terms_ok":[…](任意) },
   "readings": { "語":"よみ" },                      // この回だけの読み辞書（字幕は原文のまま）
   "cuts": [
-    { "id":"t0","type":"card","kind":"title","fixed_ms":2200 },                       // 番号＋操作名だけ
+    { "id":"t0","type":"card","kind":"title","fixed_ms":2200 },                       // 操作名＋subtitle（番号は出さない）
     { "id":"x1","type":"demo","left_html":"<div class=\"slide\"><h2>…</h2><div class=\"lead\">…</div><ul class=\"pts\">…</ul><div class=\"ver\">…</div></div>",   // 説明スライド（§4.4）
       "cap":"…","prompt":"…","note":"…","badge":"14字以内","text":"…では、実際にやってみましょう。","S":[{"t":"beat","talk":true}] },
     { "id":"d1","type":"demo","cap":"…","prompt":"…","note":"…","badge":"…","text":"…","tail_ms":400,
@@ -149,7 +149,7 @@ CLAUDE_ARGS="--permission-mode default" bash $S/capture_session.sh "$P" clips/<i
 
 ### 4.3 カット構成（基本形と意味づけカットの判断基準）
 ```
-t0  タイトルカード（無声 2.2s）: 番号＋操作名だけ
+t0  タイトルカード（無声 2.2s）: 操作名＋効果がわかるサブタイトル（meta.subtitle）。番号は出さない
 x1  説明スライド（8〜12s）: できることを一文＋補足2つまで＋収録バージョン。締めは「では、実際にやってみましょう。」
 d1  状況: 何を頼み、何が起きるか
 d2  操作: キー／コマンド＋実録の反応（見せ場。原文ママ）

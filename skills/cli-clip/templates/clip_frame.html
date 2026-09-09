@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2026 Tsuyoshi Hemmi / License: MIT -->
 <!-- cli-clip フレーム 1920x1080（ナレーター1人・キャラなし）。
      ?spec=<JSON> で受け取る: {theme:{channel,series,colors,font_sans,font_mono}, meta:{no,op,...}, cut:{...}, beatms, tailms, fast, subs}
-       cut.type='card'  … kind='title'（番号＋操作名だけ。sub / show_version を書いたときだけ追加表示）
+       cut.type='card'  … kind='title'（操作名＋効果がわかるサブタイトル meta.subtitle。番号は出さない。show_version で収録バージョンを追加表示）
        cut.type='demo'  … 左=擬似端末（実録の清書）or left_html（説明スライド）／右=要点パネル／下=フルセリフ字幕
      端末の行タイプ: cmd sys user out pm code gd add del menusel warn gap ret clear esc key beat
      window.__beatAt にビート開始秒、window.__done で録画終了（cap_frame.mjs が読む）。 -->
@@ -127,7 +127,7 @@ if(C.ink)rs.setProperty('--ink',C.ink); if(C.gold)rs.setProperty('--gold',C.gold
 if(C.paper)rs.setProperty('--paper',C.paper); if(C.termbg)rs.setProperty('--bg',C.termbg);
 if(THEME.font_sans)rs.setProperty('--sans',THEME.font_sans); if(THEME.font_mono)rs.setProperty('--mono',THEME.font_mono);
 $('hl').innerHTML=`${THEME.channel||'cli-clip'}<span class="g"> ｜ </span>${META.series||THEME.series||''}`;
-$('hr').innerHTML=(META.no?`<b>#${META.no}</b>`:'')+(META.op||'');
+$('hr').innerHTML=META.op||'';
 // 録画ハートビート（静止シーンでも毎フレーム微小再描画→webmが実時間長になる）
 (()=>{ const hb=document.createElement('div');
   hb.style.cssText='position:absolute;left:2px;bottom:2px;width:3px;height:3px;z-index:99;opacity:.06;pointer-events:none';
@@ -172,10 +172,11 @@ async function runDemo(){
 async function runCard(){
   for(const id of ['demo','panel','telop']) $(id).style.display='none';
   $('card').classList.add('on');
-  $('ck').textContent=META.no?`#${META.no}`:'';
+  $('ck').textContent=CUT.kicker||'';
   $('ct').innerHTML=CUT.title||META.op||'';
-  $('cs').innerHTML=CUT.sub||'';
-  if(!CUT.sub){ $('cs').style.display='none'; $('crule').style.display='none'; }
+  const sub=CUT.sub||META.subtitle||META.win||'';
+  $('cs').innerHTML=sub;
+  if(!sub){ $('cs').style.display='none'; $('crule').style.display='none'; }
   $('cver').textContent=CUT.show_version?(META.version||''):'';
   await sleep(250); window.__beatAt=performance.now()/1000; await sleep(BEATMS); await sleep(400); await sleep(TAILMS); window.__done=true;
 }
