@@ -1,3 +1,4 @@
+# 注: raw/ 内の練習フォルダの絶対パスとアカウント名は公開用に /tmp/cli-clip-practice/op01 ・ user に置換済み（それ以外は原文ママ）
 # capture_session.sh スモークテスト（読む系だけ・練習フォルダ）
 trust
 snap ready
