@@ -38,6 +38,15 @@
   /* 説明スライド・任意HTML面（left_html） */
   .docv{background:var(--paper);color:var(--ink);padding:36px 44px;box-sizing:border-box}
   .docv h2{margin:0 0 8px;font-size:38px;color:var(--ink)} .docv .sub{font-size:22px;color:#5a6f83;margin-bottom:22px}
+  .docv h2 .acc{color:var(--pri)}
+  /* 説明スライド標準形（x1）: 見出し＋一文＋補足2つまで＋収録バージョン。囲み・番号・矢印は使わない（開発者向けに見せない） */
+  .slide{display:flex;flex-direction:column;height:calc(100% - 150px);box-sizing:border-box}   /* 下 150px は字幕帯のぶん空ける */
+  .slide .lead{font-size:46px;font-weight:900;color:var(--ink);line-height:1.5;margin:64px 0 40px}
+  .slide .lead em{font-style:normal;color:var(--pri)}
+  .slide .pts{margin:0;padding:0;list-style:none}
+  .slide .pts li{font-size:32px;font-weight:700;color:#3B4F62;line-height:1.55;padding-left:36px;position:relative;margin-bottom:18px}
+  .slide .pts li::before{content:"";position:absolute;left:0;top:19px;width:14px;height:14px;border-radius:50%;background:var(--gold)}
+  .slide .ver{margin-top:auto;font-size:22px;color:#5a6f83}
   .mdpage{background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:34px 44px;font-family:var(--mono)}
   .mdpage .h1{font-size:44px;font-weight:900;border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:22px}
   .mdpage .li{font-size:33px;line-height:1.85;color:#2b3440}
@@ -51,6 +60,7 @@
   .tip small{display:block;font-size:22px;color:#bcd0e2;font-weight:700;margin-top:8px}
   .codev{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:27px;line-height:1.55;padding:30px 36px;white-space:pre-wrap;word-break:break-all;box-sizing:border-box;height:100%;overflow:hidden}
   .codev .k{color:#9ED0FF} .codev .s{color:#4FD08A} .codev .c{color:#8aa0b3} .codev .hl{background:rgba(201,162,39,.25);border-radius:4px}
+  /* 図解用（概要回・比較図など。x1 の標準形には使わない） */
   .flow{display:flex;flex-direction:column;gap:22px;justify-content:center;height:100%;box-sizing:border-box} .frow{display:flex;align-items:center;gap:16px}
   .fbox{flex:1;background:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 6px 18px rgba(0,0,0,.10);border-top:10px solid var(--pri);min-width:0}
   .fbox.h{border-top-color:var(--gold)} .fbox.d{border-top-color:var(--ink)}

@@ -1,13 +1,14 @@
 {
  "_license": "Copyright (c) 2026 <your name>",
- "_note": "cli-clip 台本の雛形。構成＝タイトル→説明スライド→デモ。セリフは原文句読点のまま（TTS＝字幕）。端末の行は実録の清書＝捏造しない。 meta.voices を書かなければビルド時に声の選択が出る（kurono/no7/metan/all）。",
+ "_note": "cli-clip 台本の雛形。構成＝タイトル→説明スライド→デモで完結（意味づけカットは見せ切れないときだけ）。ナレーションは講師スタイルのですます調・断定を避ける・開発用語を使わない（SKILL.md §4.1〜4.4）。セリフは原文句読点のまま（TTS＝字幕）。端末の行は実録の清書＝捏造しない。meta.voices を書かなければビルド時に声の選択が出る（kurono/no7/metan/all）。",
  "meta": {
   "id": "opNN-name",
-  "series": "Claude Code 基本操作",
+  "series": "シリーズ名（例: Claude Code 基本操作）",
   "no": "NN",
   "op": "操作名",
-  "version": "Claude Code vX.Y.Z で収録（YYYY-MM-DD）",
-  "capture_source": "clips/opNN-name/capture/transcript.md"
+  "version": "ツール名 vX.Y.Z で収録（YYYY-MM-DD）",
+  "capture_source": "clips/opNN-name/capture/transcript.md",
+  "terms_ok": []
  },
  "readings": {},
  "cuts": [
@@ -21,12 +22,12 @@
    "id": "x1",
    "type": "demo",
    "tbar": "操作名 — 説明",
-   "left_html": "<h2>操作名 <span style=\"color:#2E7D5B\">— 何が起きる？</span></h2><div class=\"sub\">Claude Code vX.Y.Z で収録</div><div class=\"flow\" style=\"height:auto;margin-top:26px;gap:26px\"><div class=\"fbox\"><div class=\"t\">① …</div><div class=\"b\">…</div></div><div class=\"fbox d\"><div class=\"t\">② …</div><div class=\"b\">…</div></div><div class=\"fbox h\"><div class=\"t\">③ …</div><div class=\"b\">…</div></div></div>",
+   "left_html": "<div class=\"slide\"><h2>操作名 <span class=\"acc\">— 一言で言うと</span></h2><div class=\"lead\">この操作でできることを、<em>一文</em>で書きます。</div><ul class=\"pts\"><li>補足1（任意・25字以内）</li><li>補足2（任意・25字以内）</li></ul><div class=\"ver\">ツール名 vX.Y.Z で収録（YYYY-MM-DD）</div></div>",
    "cap": "この操作でできること",
    "prompt": "<span class=\"q\">▷</span> 一言",
-   "note": "① …<br>② …<br>③ …",
+   "note": "補足1<br><br>補足2",
    "badge": "14字以内",
-   "text": "…。では、実際にやってみよう。",
+   "text": "この操作でできることを、一文で説明します。補足があれば、短く一言添えます。では、実際にやってみましょう。",
    "tail_ms": 600,
    "S": [
     {
@@ -39,10 +40,10 @@
    "id": "d1",
    "type": "demo",
    "cap": "状況",
-   "prompt": "<span class=\"q\">▷</span> 投入プロンプト",
-   "note": "補足",
+   "prompt": "<span class=\"q\">▷</span> 頼んだ内容",
+   "note": "何が起きるかを短く",
    "badge": "14字以内",
-   "text": "…",
+   "text": "まず、練習フォルダで、こう頼んでみます。頼んだ直後から、こういう動きが始まることが多いです。",
    "tail_ms": 400,
    "S": [
     {
@@ -76,8 +77,8 @@
    "cap": "操作",
    "prompt": "<span class=\"q\">▷</span> <b>キー</b>を押す",
    "note": "実表示：…",
-   "badge": "…",
-   "text": "…",
+   "badge": "14字以内",
+   "text": "ここで、キーを一回押します。すると、こういう表示に変わります。",
    "tail_ms": 900,
    "S": [
     {
@@ -112,11 +113,11 @@
   {
    "id": "d3",
    "type": "demo",
-   "cap": "結果と意味づけ",
-   "prompt": "<span class=\"q\">▷</span> …",
-   "note": "…",
-   "badge": "…",
-   "text": "…（最後のカット。そのまま終わる）",
+   "cap": "結果",
+   "prompt": "<span class=\"q\">▷</span> 何が残り、何が変わっていないか",
+   "note": "次に何をすればよいかを一言",
+   "badge": "14字以内",
+   "text": "この時点で、ファイルは変わっていません。ここから、次の指示をそのまま出せます。",
    "tail_ms": 1200,
    "S": [
     {
@@ -131,7 +132,8 @@
      "t": "beat",
      "talk": true
     }
-   ]
+   ],
+   "_hint": "基本はこの結果カットで終わる（tail_ms 1000〜1200）。意味づけ d4 は SKILL.md §4.3 の基準に当てはまるときだけ足す"
   }
  ]
 }

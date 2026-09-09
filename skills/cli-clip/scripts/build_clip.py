@@ -74,6 +74,13 @@ def sub_windows(text, total_ms, wav=None, align="whisper", readings=None):
 
 # ---------------------------------------------------------------- lint（台本ルール）
 NIN = re.compile(r"あなた|君は|君が|君の|君も"); DANTEI = re.compile(r"必ず|絶対|100%|決して")
+POLITE = re.compile(r"(です|ます|ません|でした|ましょう|ください|でしょう|ですね|ますね|ますか|ですか|ますよ|ですよ)$")   # ですます調の文末
+TERMS = []   # 用語の平易化辞書 config/terms.tsv（語, 言い換え）
+_tp = CONFIG / "terms.tsv"
+if _tp.exists():
+    for _ln in _tp.read_text().splitlines():
+        if _ln.strip() and not _ln.startswith("#"):
+            _w, *_r = _ln.split("\t"); TERMS.append((_w.strip(), (_r[0].strip() if _r else "")))
 def lint(spec):
     warns, total = [], 0
     for c in spec["cuts"]:
@@ -81,7 +88,14 @@ def lint(spec):
         if t:
             total += len(t)
             if NIN.search(t): warns.append(f"[{cid}] 二人称（あなた/君）: {NIN.search(t).group()}")
-            if DANTEI.search(t): warns.append(f"[{cid}] 断定語: {DANTEI.search(t).group()}（『〜ことが多い』等へ）")
+            if DANTEI.search(t): warns.append(f"[{cid}] 断定語: {DANTEI.search(t).group()}（『〜ことが多いです』等へ）")
+            for sent in re.split(r"[。！？]", t):                       # 文体: ですます調（講師スタイル）
+                sent = sent.strip().rstrip("」』）)")
+                if sent and not POLITE.search(sent): warns.append(f"[{cid}] 文体（ですます調でない文末）: …{sent[-14:]}")
+        ok = set(spec["meta"].get("terms_ok") or [])
+        fields = " ".join(str(c.get(k) or "") for k in ("text","cap","prompt","note","badge","left_html"))
+        for w, alt in TERMS:                                            # 用語の平易化（警告のみ）
+            if w not in ok and re.search(re.escape(w), fields, re.I): warns.append(f"[{cid}] 専門用語「{w}」→「{alt}」（meta.terms_ok で除外可）")
         b = c.get("badge") or ""
         if len(b) > 14: warns.append(f"[{cid}] 右パネルのバッジ {len(b)}字 > 14字: {b}")
         if c.get("type") == "demo" and not c.get("S") and not c.get("left_html"): warns.append(f"[{cid}] demo なのに S も left_html も無い")
