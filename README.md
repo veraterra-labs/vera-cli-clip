@@ -85,9 +85,10 @@ skills/cli-clip/
   SKILL.md                 手順（AI向け）
   scripts/                 build_clip.py / capture_session.sh / make_practice_dir.sh / raw2lines.py
                            tts_voicevox.py / align.py / voice_samples.py / cap_frame.mjs / env.py
-  templates/               clip_frame.html（画面テンプレ）/ clip.example.json（台本の雛形）
-  config/                  theme.json（チャンネル名・配色・フォント）/ voices.json（3声）/ readings.tsv（読み辞書）/ env.json（setup 生成）
-  docs/catalog-claude-code.md   Claude Code 基本操作の題材一覧
+  templates/               clip_frame.html（画面テンプレ）/ clip.example.json（台本の雛形）/ research.example.md（題材メモの雛形）
+  config/                  theme.json（チャンネル名・配色・フォント）/ voices.json（3声）/ readings.tsv（読み辞書）/ terms.tsv（用語の言い換え）
+                           persona.md（想定視聴者）/ review-checklist.md（セルフレビュー観点）/ env.json（setup 生成）
+  docs/                    catalog-claude-code.md（題材一覧）/ ideas-claude-code.md（初心者の質問リスト＝ネタ帳）
 skills/cli-clip-setup/
   SKILL.md / scripts/setup.sh   check | install | env | link
 clips/<id>/

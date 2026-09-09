@@ -110,6 +110,27 @@ def lint(spec):
     if est < 45: warns.append(f"尺不足見込み: {info}")
     return warns, info
 
+# ---------------------------------------------------------------- 誤読チェック（whisper で聞き戻して原文と比較。目安であり最終判断は AI が両方を読む）
+def reading_check(spec, VOX, readings):
+    import difflib
+    _P = re.compile(r"[\s、。「」『』（）()・,.!?！？…―—\-]")
+    out = []
+    for c in spec["cuts"]:
+        t = c.get("text"); wav = VOX/f"{c['id']}.wav"
+        if not t or not wav.exists() or not ENV.get("whisper_cli"): continue
+        try:
+            ds_align._token_times(wav)                       # wtok.json を作る／キャッシュを使う
+            jf = wav.with_suffix(".wtok.json")
+            d = json.loads(jf.read_bytes().decode("utf-8", "replace"))
+            heard = "".join(x.get("text", "") for x in d.get("transcription", []))
+        except Exception as e:
+            out.append(f"  {c['id']:8s} whisper 不可: {e}"); continue
+        a = _P.sub("", tv.apply_readings(t, readings)); b = _P.sub("", heard)
+        r = difflib.SequenceMatcher(None, a, b).ratio()
+        flag = "要確認" if r < 0.55 else "ok"
+        out.append(f"  {c['id']:8s} 類似度 {r:.2f} {flag}\n           原文: {t}\n           聞取: {heard.strip()}")
+    return out
+
 # ---------------------------------------------------------------- build
 def main():
     ap = argparse.ArgumentParser()
@@ -220,12 +241,14 @@ def build_one(a, spec, spec_path, key):
         try:
             if abs(float(v)-float(au)) > 0.06: drift.append(f"{c['id']} v={v} a={au}")
         except ValueError: drift.append(f"{c['id']} probe失敗")
+    rc_lines = reading_check(spec, VOX, readings)
     I = lufs(final); T = adur(final); mx = meta.get("max_sec", THEME.get("max_sec_default", 130))
     ok = (50 <= T <= mx) and ch.startswith("aac,48000,2") and I is not None and abs(I-EP_REF) <= 0.3 and not drift
     rep = [str(final), f"voice: {tv.credit(key)}（{vp['style']} id={vp['id']}）",
            f"total {T:.1f}s ({T/60:.2f}min)  audio {ch}  I={I} LUFS  size {final.stat().st_size//1024}KB", "cuts:"] + \
           [f"  {lbl:8s} {s:6.2f}s +{d:5.2f}s" for lbl,(s,d) in starts.items()] + \
-          ["A/V drift: " + (", ".join(drift) if drift else "none"), f"CHECK: {'PASS' if ok else 'WARN'}  (尺50–{mx}s / aac48k2ch / I={EP_REF}±0.3 / drift無し)"]
+          ["A/V drift: " + (", ".join(drift) if drift else "none"), f"CHECK: {'PASS' if ok else 'WARN'}  (尺50–{mx}s / aac48k2ch / I={EP_REF}±0.3 / drift無し)",
+           "reading (whisper 聞き戻し。要確認は原文と聞取を読んで誤読か判断。base モデルなので漢字がカナになるのは正常):"] + (rc_lines or ["  （whisper 未設定のため省略）"])
     (OUT/"report.txt").write_text("\n".join(rep)); print("\n".join(rep))
 
     # ---- レビュー用コピー（theme.review_copy_dir があれば）----
